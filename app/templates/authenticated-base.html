@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block internal_css %}
+
+<style>
+    body {
+        overflow-x: hidden;
+        background-color: #f8f9fa;
+    }
+
+    #wrapper {
+        display: flex;
+    }
+
+    #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        min-height: 100vh;
+        transition: all 0.3s;
+        background: #1b263b;
+        color: #fff;
+    }
+
+    #sidebar.collapsed {
+        margin-left: -250px;
+    }
+
+    #sidebar .nav-link {
+        color: #adb5bd;
+        font-weight: 500;
+    }
+
+    #sidebar .nav-link:hover,
+    #sidebar .nav-link.active {
+        color: #fff;
+        background-color: #415a77;
+        border-radius: 0.5rem;
+    }
+
+    #content {
+        width: 100%;
+        padding: 1rem;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+    }
+
+    .summary-card {
+        border-left: 5px solid #0d6efd;
+    }
+
+    .navbar {
+        border-bottom: 1px solid #dee2e6;
+    }
+</style>
+
+{% block additional_styles %}{% endblock %}
+
+{% endblock %}
+
+
+{% block content %}
+<div id="wrapper">
+
+    <nav id="sidebar" class="p-3 d-flex flex-column vh-100">
+        <h4 class="text-white mb-4 text-center py-4">Project Template</h4>
+
+        <ul class="nav nav-pills flex-column gap-2 flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center {{ 'active' if request.path == '/app' }}" href="/app">
+                    <span class="material-symbols-outlined me-2">people</span>
+                    Users
+                </a>
+            </li>
+            
+            <li class="nav-item mt-auto">
+                <a class="nav-link d-flex align-items-center text-danger" href="/logout">
+                    <span class="material-symbols-outlined me-2">logout</span>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-expand-lg bg-white mb-4 px-3 rounded-3 shadow-sm">
+            <button class="btn btn-outline-secondary" id="menu-toggle">
+                <span class="material-symbols-outlined md-dark">menu</span>
+            </button>
+
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span class="fw-semibold">Welcome, {{user.username}}</span>
+            </div>
+        </nav>
+        
+        <div class="row">
+            <div class="col-12">
+                {% for message in get_flashed_messages(request) %}
+                    <div class="alert alert-{{ message.type }}" role="alert">{{ message.message }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        {% block subpage_content %}{% endblock %}
+
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    });
+</script>
+
+{% block subpage_scripts %}{% endblock %}
+
+{% endblock %}

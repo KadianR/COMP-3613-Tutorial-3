@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block external_js %}
+
+{% endblock %}
+
+{% block internal_css %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .login-container {
+        min-height: 100vh;
+    }
+
+    .login-card {
+        border: none;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .login-image {
+        background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 3rem;
+    }
+
+    .form-section {
+        padding: 3rem;
+    }
+
+    .btn-primary {
+        border-radius: 0.5rem;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container login-container d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg login-card col-lg-10">
+        <div class="row g-0">
+            <div class="col-lg-6 d-none d-lg-flex login-image">
+                <div class="text-center">
+                    <h2 class="mt-4 fw-bold">Registration</h2>
+                    <p class="lead">Create an account for the app</p>
+                </div>
+            </div>
+            <div class="col-lg-6 bg-white">
+                <div class="form-section">
+                    <h3 class="fw-bold mb-4">Register</h3>
+
+                    <form id="signUpForm" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control form-control-md" id="username" name="username"
+                                required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email</label>
+                            <input type="email" class="form-control form-control-md" id="email" name="email"
+                                required="required">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control form-control-md" id="password" name="password"
+                                required>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Register
+                            </button>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <a class="btn btn-secondary btn-lg" href="{{url_for('login_view')}}" role="button">
+                                Back to Login
+                            </a>
+                        </div>
+                        {% for message in get_flashed_messages(request) %}
+                        <div class="alert alert-{{ message.type }}" role="alert">{{ message.message }}</div>
+                        {% endfor %}
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
